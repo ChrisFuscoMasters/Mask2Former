@@ -22,4 +22,4 @@ module use /apps/icl/modules/all
 module load Anaconda3/2023.03
 module load CUDA/11.6.2
 source activate mask2former
-python3 train_net.py --num-gpus 4 --config-file configs/coco/panoptic-segmentation/maskformer2_R50_bs16_50ep.yaml
+~/.conda/envs/mask2former/bin/python3 train_net.py --num-gpus 4 --config-file configs/coco/panoptic-segmentation/maskformer2_R50_bs16_50ep.yaml
