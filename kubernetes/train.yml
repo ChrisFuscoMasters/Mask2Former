@@ -30,7 +30,7 @@ spec:
               bash train.sh
           resources:
             limits:
-              nvidia.com/gpu: 2
+              nvidia.com/gpu: 4
               memory: 72Gi
               cpu: 8000m
             requests:
