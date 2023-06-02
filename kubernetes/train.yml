@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: train-mask2former-detectron2-coco
+  namespace: aiml-valmadre-research
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+
+      volumes:
+        - name: dataset-volume
+          persistentVolumeClaim:
+            claimName: cf-maskformer-parts-data-pvc
+        - name: shm-volume
+          emptyDir:
+            medium: Memory
+
+      containers:
+        - name: train-mask2former-detectron2-coco
+          image: docker.aiml.team/christopher.fusco/tao-ow-evaluation:latest
+          stdin: true
+          tty: true
+          command: ["/bin/bash", "-c"]
+          args:
+            - git clone https://${GITHUB_TOKEN}@github.com/ChrisFuscoMasters/Mask2Former.git && 
+              export DETECTRON2_DATASETS=/data/datasets && 
+              cd Mask2Former && 
+              bash train.sh
+          resources:
+            limits:
+              nvidia.com/gpu: 2
+              memory: 72Gi
+              cpu: 8000m
+            requests:
+              memory: 72Gi
+              cpu: 8000m
+          volumeMounts:
+            - name: dataset-volume
+              mountPath: /data
+            - name: shm-volume
+              mountPath: /dev/shm
+          env:
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                    name: cf-github
+                    key: token
+            - name: WANDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: cf-wandb
+                    key: token

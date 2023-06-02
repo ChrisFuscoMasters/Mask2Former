@@ -58,6 +58,13 @@ from mask2former import (
     add_maskformer2_config,
 )
 
+import wandb
+wandb.init(
+    project='Parts Segmentation',
+    name="Mask2Former-Det2",
+    sync_tensorboard=True
+)
+
 
 class Trainer(DefaultTrainer):
     """
