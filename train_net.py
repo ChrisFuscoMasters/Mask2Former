@@ -59,11 +59,7 @@ from mask2former import (
 )
 
 import wandb
-wandb.init(
-    project='Parts Segmentation',
-    name="Mask2Former-Det2",
-    sync_tensorboard=True
-)
+import torch.distributed as dist
 
 
 class Trainer(DefaultTrainer):
@@ -299,6 +295,7 @@ def setup(args):
     default_setup(cfg, args)
     # Setup logger for "mask_former" module
     setup_logger(output=cfg.OUTPUT_DIR, distributed_rank=comm.get_rank(), name="mask2former")
+
     return cfg
 
 
@@ -316,6 +313,13 @@ def main(args):
         if comm.is_main_process():
             verify_results(cfg, res)
         return res
+    
+    if dist.get_rank() == 0:
+        wandb.init(
+            project='Parts Segmentation',
+            name="Mask2Former-Det2",
+            sync_tensorboard=True
+        )
 
     trainer = Trainer(cfg)
     trainer.resume_or_load(resume=args.resume)

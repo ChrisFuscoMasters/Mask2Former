@@ -26,6 +26,8 @@ spec:
           args:
             - git clone https://${GITHUB_TOKEN}@github.com/ChrisFuscoMasters/Mask2Former.git && 
               export DETECTRON2_DATASETS=/data/datasets && 
+              pip uninstall panopticapi &&
+              pip install git+https://github.com/cocodataset/panopticapi.git &&
               cd Mask2Former && 
               bash train.sh
           resources:
