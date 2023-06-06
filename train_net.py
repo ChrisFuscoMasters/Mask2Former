@@ -296,12 +296,12 @@ def setup(args):
     # Setup logger for "mask_former" module
     setup_logger(output=cfg.OUTPUT_DIR, distributed_rank=comm.get_rank(), name="mask2former")
 
-    if comm.get_rank() == 0:
-        wandb.init(
-            project='Parts Segmentation',
-            name="Mask2Former-Det2",
-            sync_tensorboard=True
-        )
+    # if comm.get_rank() == 0:
+    #     wandb.init(
+    #         project='Parts Segmentation',
+    #         name="Mask2Former-Det2",
+    #         sync_tensorboard=True
+    #     )
 
     return cfg
 
