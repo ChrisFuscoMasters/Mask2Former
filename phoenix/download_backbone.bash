@@ -1,3 +1,3 @@
 mkdir backbones
-cd bakbones/
+cd backbones/
 wget https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/torchvision/R-50.pkl
