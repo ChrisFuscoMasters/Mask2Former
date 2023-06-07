@@ -58,8 +58,8 @@ from mask2former import (
     add_maskformer2_config,
 )
 
-import wandb
-import torch.distributed as dist
+# import wandb
+# import torch.distributed as dist
 
 
 class Trainer(DefaultTrainer):
